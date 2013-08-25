@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<project name="calendars-packager" default="main" basedir="./..">
+	<!-- $Id: build.xml,v 1.1 2008/11/05 08:53:48 maxence Exp $ -->
+	<target name="main" depends="prepare,build-core,build-disp-cal,build-disp-sol" />
+
+	<target name="prepare">
+		<echo message="Calendars Packager" />
+		<property name="build.dir" value="D:/tools/calendars/lib" />
+		<property name="classes.dir" value="${basedir}/target/classes" />
+		<property name="version" value="2.5.0" />
+		<mkdir dir="${build.dir}" />
+		<echo message="Basedir is: ${basedir}" />
+	</target>
+
+	<target name="build-core">
+		<jar destfile="${build.dir}/calendars-core-${version}.jar">
+			<fileset dir="${classes.dir}">
+				<include name="fr/mvanbesien/calendars/calendars/*.class" />
+				<include name="fr/mvanbesien/calendars/clocks/*.class" />
+				<include name="fr/mvanbesien/calendars/ephemerides/*.class" />
+				<include name="fr/mvanbesien/calendars/inprogress/*.class" />
+				<include name="fr/mvanbesien/calendars/tools/*.class" />
+			</fileset>
+			<fileset dir="${basedir}">
+				<include name="images/**/*.gif" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="build-disp-cal">
+		<jar destfile="${build.dir}/calendars-caldisp-${version}.jar">
+			<manifest>
+				<attribute name="Class-Path" value="calendars-core-${version}.jar" />
+				<attribute name="Main-Class" value="fr.mvanbesien.calendars.runners.CalendarsDisplayer" />
+			</manifest>
+			<fileset dir="${classes.dir}">
+				<include name="fr/beziencorp/calendars/runners/CalendarsDisplayer.class" />
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="build-disp-sol">
+		<jar destfile="${build.dir}/calendars-soldisp-${version}.jar">
+			<manifest>
+				<attribute name="Class-Path" value="calendars-core-${version}.jar" />
+				<attribute name="Main-Class" value="fr.mvanbesien.calendars.runners.SolarDisplayer" />
+			</manifest>
+			<fileset dir="${classes.dir}">
+				<include name="fr/beziencorp/calendars/runners/SolarDisplayer.class" />
+			</fileset>
+		</jar>
+	</target>
+
+</project>
