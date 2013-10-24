@@ -34,6 +34,7 @@ import fr.mvanbesien.calendars.calendars.AztecCalendar;
 import fr.mvanbesien.calendars.calendars.ChineseCalendar;
 import fr.mvanbesien.calendars.calendars.ClassicCalendar;
 import fr.mvanbesien.calendars.calendars.ColignyCalendar;
+import fr.mvanbesien.calendars.calendars.DarianCalendar;
 import fr.mvanbesien.calendars.calendars.DiscordianCalendar;
 import fr.mvanbesien.calendars.calendars.GoddessLunarCalendar;
 import fr.mvanbesien.calendars.calendars.ImladrisCalendar;
@@ -66,15 +67,13 @@ public class CalendarsDisplayer {
 		System.out.println("ISO8601 Date             : " + ClassicCalendar.getWeekDate(c));
 		System.out.println("Season Date              : " + SeasonCalendar.getSeasonDate(c) + ", "
 				+ SeasonCalendar.getNextSeasonDate(c));
-		System.out.println("Julian Day               : "
-				+ new Double(ClassicCalendar.getJulianDay(c)).intValue());
+		System.out.println("Julian Day               : " + new Double(ClassicCalendar.getJulianDay(c)).intValue());
 		System.out.println("-----------------------------------------------");
 		System.out.println("European Zodiac Sign     : " + ZodiacSign.getZodiacSign(c));
 		System.out.println("Chinese Zodiac Sign      : " + ChineseSigns.getSign(c));
-		System.out.println("Ecclesiastic Comput      : Epacte = " + EcclesiasticComput.getEpacte(c)
-				+ ", Indiction = " + EcclesiasticComput.getIndiction(c) + ", Golden Number = "
-				+ EcclesiasticComput.getGoldNumber(c) + ", Dominical Letter = "
-				+ EcclesiasticComput.getDominicalLetter(c));
+		System.out.println("Ecclesiastic Comput      : Epacte = " + EcclesiasticComput.getEpacte(c) + ", Indiction = "
+				+ EcclesiasticComput.getIndiction(c) + ", Golden Number = " + EcclesiasticComput.getGoldNumber(c)
+				+ ", Dominical Letter = " + EcclesiasticComput.getDominicalLetter(c));
 		System.out.println("-----------------------------------------------");
 		System.out.println("Coligny Calendar         : " + ColignyCalendar.getDate(c));
 		System.out.println("Roman Calendar           : " + RomanCalendar.getDateAsString(c));
@@ -103,8 +102,8 @@ public class CalendarsDisplayer {
 		System.out.println("Pataphysique Calendar    : " + PataphysiqueCalendar.getDate(c) + " ("
 				+ PataphysiqueCalendarDay.getValue(c) + ")");
 		System.out.println("Discordian Calendar      : " + DiscordianCalendar.getDate(c));
-
 		System.out.println("-----------------------------------------------");
+		System.out.println("Darian Martian Calendar  : " + DarianCalendar.getDate(c));
 	}
 
 	public static void main(String[] args) {
