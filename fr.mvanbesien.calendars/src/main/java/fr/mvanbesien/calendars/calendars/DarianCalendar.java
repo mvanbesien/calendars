@@ -50,7 +50,7 @@ public class DarianCalendar {
 		}
 
 		DarianDate date = new DarianDate();
-		date.setOrdinaryDate(0, (int) elapsedSols, month, year);
+		date.setOrdinaryDate(0, (int) elapsedSols + 1, month, year);
 		return date;
 	}
 
