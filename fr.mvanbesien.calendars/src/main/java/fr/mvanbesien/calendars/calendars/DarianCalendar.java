@@ -80,13 +80,5 @@ public class DarianCalendar {
 		
 		return date;
 	}
-	
-	/**
-	 * Main Method.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		System.out.println(getDate());
-	}
 
 }
