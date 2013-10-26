@@ -52,7 +52,7 @@ public class DarianCalendar {
 		int centuryReminder = halfMilleniumReminder - (centuries != 0 ? centuries * 66859 + 1 : 0);
 
 		// Third decomposition, based on 10yr basis
-		int decadeLeapDayValue = centuries == 0 ? 1 : 0;
+		int decadeLeapDayValue = centuries == 0 ? 0 : 1;
 		int decades = (centuryReminder + decadeLeapDayValue) / 6686;
 		int decadeReminder = centuryReminder - (decades != 0 ? decades * 6686 - decadeLeapDayValue : 0);
 
@@ -80,5 +80,4 @@ public class DarianCalendar {
 		
 		return date;
 	}
-
 }
