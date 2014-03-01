@@ -74,7 +74,7 @@ public class DarianCalendar {
 		int monthInQuarter = solInQuarter / 28;
 
 		int month = monthInQuarter + 6 * quarter;
-		int sol = yearReminder - ((month - 1) * 28 - quarter) + 1;
+		int sol = yearReminder - (month * 28 - quarter) + 1;
 		DarianDate date = new DarianDate();
 		date.setOrdinaryDate(0, sol, month, years);
 		
