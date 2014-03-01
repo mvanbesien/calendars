@@ -80,13 +80,4 @@ public class DarianCalendar {
 		
 		return date;
 	}
-	
-	public static void main(String[] args) {
-		Calendar c = Calendar.getInstance();
-		for (int i = 0;i<100;i++) {
-		System.out.println(getDate(c));
-		c.add(Calendar.DAY_OF_YEAR, 1);
-		}
-			
-	}
 }
