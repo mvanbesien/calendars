@@ -5,9 +5,9 @@
 
 	<target name="prepare">
 		<echo message="Calendars Packager" />
-		<property name="build.dir" value="D:/tools/calendars/lib" />
+		<property name="build.dir" value="${basedir}/target/build" />
 		<property name="classes.dir" value="${basedir}/target/classes" />
-		<property name="version" value="2.5.0" />
+		<property name="version" value="2.6.0" />
 		<mkdir dir="${build.dir}" />
 		<echo message="Basedir is: ${basedir}" />
 	</target>
@@ -17,9 +17,11 @@
 			<fileset dir="${classes.dir}">
 				<include name="fr/mvanbesien/calendars/calendars/*.class" />
 				<include name="fr/mvanbesien/calendars/clocks/*.class" />
+				<include name="fr/mvanbesien/calendars/dates/*.class" />
+				<include name="fr/mvanbesien/calendars/days/*.class" />
 				<include name="fr/mvanbesien/calendars/ephemerides/*.class" />
-				<include name="fr/mvanbesien/calendars/inprogress/*.class" />
 				<include name="fr/mvanbesien/calendars/tools/*.class" />
+				<include name="**/*.properties" />
 			</fileset>
 			<fileset dir="${basedir}">
 				<include name="images/**/*.gif" />
