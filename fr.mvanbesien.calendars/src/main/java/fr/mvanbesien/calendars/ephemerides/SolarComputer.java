@@ -37,19 +37,19 @@ import fr.mvanbesien.calendars.tools.Utils;
 public class SolarComputer {
 
 	/**
-	 * Instance
-	 */
-	private static SolarComputer daylightComputer;
-
-	/**
 	 * Saved longitude value
 	 */
-	private static double longitude;
+	private double longitude;
 
 	/**
 	 * Saved latitude value
 	 */
-	private static double latitude;
+	private double latitude;
+
+	private SolarComputer(double longitude, double latitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 
 	/**
 	 * Returns instance of DayLightComputer, for the longitude and latitude
@@ -62,13 +62,7 @@ public class SolarComputer {
 	 * @return instance
 	 */
 	public static SolarComputer getInstance(double lg, double lt) {
-		if (SolarComputer.daylightComputer == null)
-			SolarComputer.daylightComputer = new SolarComputer();
-
-		SolarComputer.longitude = lg;
-		SolarComputer.latitude = lt;
-
-		return SolarComputer.daylightComputer;
+		return new SolarComputer(lg, lt);
 	}
 
 	/**
@@ -144,8 +138,7 @@ public class SolarComputer {
 	 * @return percentage of elapsed daylight
 	 */
 	public int getDayPct(Calendar calendar) {
-		Double d = new Double(100 - this.getDayLeft(calendar)
-				/ this.getDayTime(calendar) * 100);
+		Double d = new Double(100 - this.getDayLeft(calendar) / this.getDayTime(calendar) * 100);
 		if (d < 0 || d > 100)
 			return 0;
 		else
@@ -309,8 +302,7 @@ public class SolarComputer {
 	 * @return night elapsed percentage
 	 */
 	public int getNextNightPct(Calendar calendar) {
-		Double d = new Double(100 - this.getNightLeft(calendar)
-				/ this.getNightTime(calendar) * 100);
+		Double d = new Double(100 - this.getNightLeft(calendar) / this.getNightTime(calendar) * 100);
 		if (d < 0 || d > 100)
 			return 0;
 		else
@@ -372,12 +364,10 @@ public class SolarComputer {
 		dayMore.add(Calendar.DATE, 1);
 		Calendar dayLess = Utils.getCalendarCopy(calendar);
 		dayLess.add(Calendar.DATE, -1);
-		double sunrise = calendar.get(Calendar.HOUR_OF_DAY) > this
-				.getSunrise(calendar) ? this.getSunrise(dayMore) : this
-				.getSunrise(calendar);
-		double sunset = calendar.get(Calendar.HOUR_OF_DAY) > this
-				.getSunrise(calendar) ? this.getSunset(calendar) : this
-				.getSunset(dayLess);
+		double sunrise = calendar.get(Calendar.HOUR_OF_DAY) > this.getSunrise(calendar) ? this.getSunrise(dayMore)
+				: this.getSunrise(calendar);
+		double sunset = calendar.get(Calendar.HOUR_OF_DAY) > this.getSunrise(calendar) ? this.getSunset(calendar)
+				: this.getSunset(dayLess);
 		return 24 - sunset + sunrise;
 	}
 
@@ -402,21 +392,16 @@ public class SolarComputer {
 		tempCalendar.set(Calendar.MINUTE, 0);
 		tempCalendar.set(Calendar.SECOND, 0);
 		tempCalendar.set(Calendar.MILLISECOND, 0);
-		OrbitalElements oe = OrbitalElements.getOrbitalElements(
-				OrbitalElements.SUN, tempCalendar);
+		OrbitalElements oe = OrbitalElements.getOrbitalElements(OrbitalElements.SUN, tempCalendar);
 
 		double gmst0 = oe.getM() + oe.getW() + 180;
-		double lst = gmst0
-				+ SolarComputer.longitude
-				+ (instance.get(Calendar.HOUR_OF_DAY)
-						+ instance.get(Calendar.MINUTE) / 60f
-						+ instance.get(Calendar.SECOND) / 3600f - (instance
-						.get(Calendar.DST_OFFSET) + instance
-						.get(Calendar.ZONE_OFFSET)) / 3600000) * 15; // REALLY
+		double lst = gmst0 + this.longitude
+				+ (instance.get(Calendar.HOUR_OF_DAY) + instance.get(Calendar.MINUTE) / 60f
+						+ instance.get(Calendar.SECOND) / 3600f
+						- (instance.get(Calendar.DST_OFFSET) + instance.get(Calendar.ZONE_OFFSET)) / 3600000) * 15; // REALLY
 
-		double E = oe.getM() + oe.getE() * 180 / Math.PI
-				* Angles.sin(oe.getM())
-				* (1.0 - oe.getE() * Angles.cos(oe.getM()));
+		double E = oe.getM()
+				+ oe.getE() * 180 / Math.PI * Angles.sin(oe.getM()) * (1.0 - oe.getE() * Angles.cos(oe.getM()));
 		double xv = Angles.cos(E) - oe.getE();
 		double yv = Math.sqrt(1.0 - oe.getE() * oe.getE()) * Angles.sin(E);
 
@@ -437,9 +422,8 @@ public class SolarComputer {
 
 		double lha = lst - ra;
 
-		double sinh = Angles.sin(SolarComputer.latitude) * Angles.sin(dec)
-				+ Angles.cos(SolarComputer.latitude) * Angles.cos(dec)
-				* Angles.cos(lha);
+		double sinh = Angles.sin(this.latitude) * Angles.sin(dec)
+				+ Angles.cos(this.latitude) * Angles.cos(dec) * Angles.cos(lha);
 
 		return Angles.asin(sinh);
 
@@ -461,21 +445,16 @@ public class SolarComputer {
 	 */
 
 	public double getSunAzimuth(Calendar instance) {
-		OrbitalElements oe = OrbitalElements.getOrbitalElements(
-				OrbitalElements.SUN, instance);
+		OrbitalElements oe = OrbitalElements.getOrbitalElements(OrbitalElements.SUN, instance);
 
 		double gmst0 = oe.getM() + oe.getW() + 180;
-		double lst = gmst0
-				+ SolarComputer.longitude
-				+ (instance.get(Calendar.HOUR_OF_DAY)
-						+ instance.get(Calendar.MINUTE) / 60f
-						+ instance.get(Calendar.SECOND) / 3600f - (instance
-						.get(Calendar.DST_OFFSET) + instance
-						.get(Calendar.ZONE_OFFSET)) / 3600000) * 15;
+		double lst = gmst0 + this.longitude
+				+ (instance.get(Calendar.HOUR_OF_DAY) + instance.get(Calendar.MINUTE) / 60f
+						+ instance.get(Calendar.SECOND) / 3600f
+						- (instance.get(Calendar.DST_OFFSET) + instance.get(Calendar.ZONE_OFFSET)) / 3600000) * 15;
 
-		double E = oe.getM() + oe.getE() * 180 / Math.PI
-				* Angles.sin(oe.getM())
-				* (1.0 - oe.getE() * Angles.cos(oe.getM()));
+		double E = oe.getM()
+				+ oe.getE() * 180 / Math.PI * Angles.sin(oe.getM()) * (1.0 - oe.getE() * Angles.cos(oe.getM()));
 		double xv = Angles.cos(E) - oe.getE();
 		double yv = Math.sqrt(1.0 - oe.getE() * oe.getE()) * Angles.sin(E);
 
@@ -496,27 +475,22 @@ public class SolarComputer {
 
 		double lha = lst - ra;
 
-		double az = Angles.atan2(-Angles.sin(lha), (Angles
-				.cos(SolarComputer.latitude)
-				* Angles.tan(dec) - Angles.sin(SolarComputer.latitude)
-				* Angles.cos(lha)));
+		double az = Angles.atan2(-Angles.sin(lha),
+				(Angles.cos(this.latitude) * Angles.tan(dec) - Angles.sin(this.latitude) * Angles.cos(lha)));
 		return az < 0 ? az + 360 : az;
 	}
 
-	private double getSunInfo(Calendar instance, boolean sunrise,
-			boolean twilight) {
+	private double getSunInfo(Calendar instance, boolean sunrise, boolean twilight) {
 
 		Calendar tempCalendar = Utils.getCalendarCopy(instance);
 		tempCalendar.set(Calendar.HOUR_OF_DAY, 12);
 		tempCalendar.set(Calendar.MINUTE, 0);
 		tempCalendar.set(Calendar.SECOND, 0);
 		tempCalendar.set(Calendar.MILLISECOND, 0);
-		OrbitalElements oe = OrbitalElements.getOrbitalElements(
-				OrbitalElements.SUN, tempCalendar);
+		OrbitalElements oe = OrbitalElements.getOrbitalElements(OrbitalElements.SUN, tempCalendar);
 		double gmst0 = oe.getM() + oe.getW() + 180;
-		double E = oe.getM() + oe.getE() * 180 / Math.PI
-				* Angles.sin(oe.getM())
-				* (1.0 - oe.getE() * Angles.cos(oe.getM()));
+		double E = oe.getM()
+				+ oe.getE() * 180 / Math.PI * Angles.sin(oe.getM()) * (1.0 - oe.getE() * Angles.cos(oe.getM()));
 		double xv = Angles.cos(E) - oe.getE();
 		double yv = Math.sqrt(1.0 - oe.getE() * oe.getE()) * Angles.sin(E);
 
@@ -537,7 +511,7 @@ public class SolarComputer {
 
 		double lst = ra;
 
-		double ut = (lst - gmst0 - SolarComputer.longitude) / 15.0;
+		double ut = (lst - gmst0 - this.longitude) / 15.0;
 		while (ut < 0 || ut > 24)
 			if (ut < 0)
 				ut += 24;
@@ -547,9 +521,8 @@ public class SolarComputer {
 		if (twilight)
 			h = -6;
 
-		double aaa = (Angles.sin(h) - Angles.sin(SolarComputer.latitude)
-				* Angles.sin(dec))
-				/ (Angles.cos(SolarComputer.latitude) * Angles.cos(dec));
+		double aaa = (Angles.sin(h) - Angles.sin(this.latitude) * Angles.sin(dec))
+				/ (Angles.cos(this.latitude) * Angles.cos(dec));
 		double lha = Angles.acos(aaa) / 15.0;
 
 		double gmtt = ut;
@@ -558,8 +531,7 @@ public class SolarComputer {
 		else
 			gmtt += lha;
 		double localt = gmtt
-				+ (tempCalendar.get(Calendar.ZONE_OFFSET) + tempCalendar
-						.get(Calendar.DST_OFFSET)) / 3600000.0;
+				+ (tempCalendar.get(Calendar.ZONE_OFFSET) + tempCalendar.get(Calendar.DST_OFFSET)) / 3600000.0;
 		return localt;
 	}
 
