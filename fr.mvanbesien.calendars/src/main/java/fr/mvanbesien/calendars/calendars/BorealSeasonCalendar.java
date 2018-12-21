@@ -74,7 +74,7 @@ public class BorealSeasonCalendar {
 	 *            instance
 	 * @return Calendar instance
 	 */
-	public static Calendar getAutumnEquinox(int year) {
+	private static Calendar getAutumnEquinox(int year) {
 		double m = (new Double(year).doubleValue() - 2000) / 1000;
 		double value = 2451810.21715 + 365242.01767 * m - 0.11575 * m * m + 0.00337 * m * m * m
 				+ 0.00078 * m * m * m * m;
@@ -90,7 +90,7 @@ public class BorealSeasonCalendar {
 	 *            instance
 	 * @return Calendar instance
 	 */
-	public static Calendar getSummerSolstice(int year) {
+	private static Calendar getSummerSolstice(int year) {
 		double m = (new Double(year).doubleValue() - 2000) / 1000;
 		double value = 2451716.56767 + 365241.62603 * m + 0.00325 * m * m + 0.00888 * m * m * m
 				- 0.00030 * m * m * m * m;
@@ -106,7 +106,7 @@ public class BorealSeasonCalendar {
 	 *            instance
 	 * @return Calendar instance
 	 */
-	public static Calendar getVernalEquinox(int year) {
+	private static Calendar getVernalEquinox(int year) {
 		double m = (new Double(year).doubleValue() - 2000) / 1000;
 		double value = 2451623.80984 + 365242.37404 * m + 0.05169 * m * m - 0.00411 * m * m * m
 				- 0.00057 * m * m * m * m;
@@ -122,7 +122,7 @@ public class BorealSeasonCalendar {
 	 *            instance
 	 * @return Calendar instance
 	 */
-	public static Calendar getWinterSolstice(int year) {
+	private static Calendar getWinterSolstice(int year) {
 		double m = (new Double(year).doubleValue() - 2000) / 1000;
 		double value = 2451900.05952 + 365242.74049 * m - 0.06223 * m * m - 0.00823 * m * m * m
 				+ 0.00032 * m * m * m * m;
@@ -130,7 +130,7 @@ public class BorealSeasonCalendar {
 		return result;
 	}
 	
-	public static int dayCounter(Calendar beginDate, Calendar endDate) {
+	private static int dayCounter(Calendar beginDate, Calendar endDate) {
 
 		int beginDOY = beginDate.get(Calendar.DAY_OF_YEAR);
 		int endDOY = endDate.get(Calendar.DAY_OF_YEAR);
