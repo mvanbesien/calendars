@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import fr.mvanbesien.calendars.calendars.AztecCalendar;
+import fr.mvanbesien.calendars.calendars.BorealSeasonCalendar;
 import fr.mvanbesien.calendars.calendars.ChineseCalendar;
 import fr.mvanbesien.calendars.calendars.ClassicCalendar;
 import fr.mvanbesien.calendars.calendars.ColignyCalendar;
@@ -98,6 +99,7 @@ public class CalendarsDisplayer {
 		System.out.println("Liberalia Triday Calendar: " + liberaliaTridayDate.displayLong() + " ("
 				+ liberaliaTridayDate.displayShort() + ")");
 		System.out.println("Sexagesimal Calendar     : " + SexagesimalCalendar.getDate(c));
+		System.out.println("Boreal Season Calendar   : " + BorealSeasonCalendar.getDate(c));
 		System.out.println("");
 		System.out.println("Pataphysique Calendar    : " + PataphysiqueCalendar.getDate(c) + " ("
 				+ PataphysiqueCalendarDay.getValue(c) + ")");

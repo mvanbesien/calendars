@@ -55,7 +55,7 @@ public class RepublicanCalendar {
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int year = calendar.get(Calendar.YEAR);
 
-		int nbOfDays = Utils.dayCounter(21, 9, year - 1, day, month, year);
+		int nbOfDays = Utils.dayCounter(22, 9, year - 1, day, month, year);
 		int nbOfDaysInYear = Utils.isLeapYear(year) ? 366 : 365;
 		int rYear = year - 1792;
 		rYear = rYear + (nbOfDays > nbOfDaysInYear ? 1 : 0);
